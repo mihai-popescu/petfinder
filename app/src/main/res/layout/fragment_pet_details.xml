@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.PetDetailsFragment">
+    <ImageView
+        android:id="@+id/pet_item_thumbnail"
+        android:layout_width="360dp"
+        android:layout_height="0dp"
+        android:contentDescription="@string/pet_finder"
+        android:scaleType="centerCrop"
+        app:layout_constraintDimensionRatio="1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/text_view_name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name"
+        app:layout_constraintStart_toStartOf="@id/pet_item_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/pet_item_thumbnail"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_view_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/text_view_name_label"
+        app:layout_constraintTop_toTopOf="@id/text_view_name_label"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_name_label"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/text_view_breed_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/breed"
+        app:layout_constraintStart_toStartOf="@id/pet_item_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/text_view_name_label"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_view_breed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/text_view_breed_label"
+        app:layout_constraintTop_toTopOf="@id/text_view_breed_label"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_breed_label"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/text_view_size_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/size"
+        app:layout_constraintStart_toStartOf="@id/pet_item_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/text_view_breed_label"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_view_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/text_view_size_label"
+        app:layout_constraintTop_toTopOf="@id/text_view_size_label"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_size_label"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/text_view_gender_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/gender"
+        app:layout_constraintStart_toStartOf="@id/pet_item_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/text_view_size_label"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_view_gender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/text_view_gender_label"
+        app:layout_constraintTop_toTopOf="@id/text_view_gender_label"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_gender_label"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/text_view_status_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/status"
+        app:layout_constraintStart_toStartOf="@id/pet_item_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/text_view_gender_label"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_view_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/text_view_status_label"
+        app:layout_constraintTop_toTopOf="@id/text_view_status_label"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_status_label"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/text_view_distance_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/distance"
+        app:layout_constraintStart_toStartOf="@id/pet_item_thumbnail"
+        app:layout_constraintTop_toBottomOf="@id/text_view_status_label"
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/text_view_distance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/text_view_distance_label"
+        app:layout_constraintTop_toTopOf="@id/text_view_distance_label"
+        app:layout_constraintBottom_toBottomOf="@id/text_view_distance_label"
+        android:layout_marginStart="16dp"
+        android:textSize="16sp"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

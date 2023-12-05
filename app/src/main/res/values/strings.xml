@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">PetFinder</string>
+    <string name="action_filter">Filter</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="pets_list_fragment_label">Pets List</string>
+    <string name="pet_details_fragment_label">PetDetailsFragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+    <string name="pet_finder">pet_finder</string>
+    <string name="name">Name:</string>
+    <string name="breed">Breed:</string>
+    <string name="size">Size:</string>
+    <string name="gender">Gender:</string>
+    <string name="status">Status:</string>
+    <string name="distance">Distance:</string>
+</resources>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/PetListFragment">
+
+    <fragment
+        android:id="@+id/PetListFragment"
+        android:name="com.example.petfinder.ui.PetsListFragment"
+        android:label="@string/pets_list_fragment_label"
+        tools:layout="@layout/fragment_pets_list">
+
+        <action
+            android:id="@+id/action_PetListFragment_to_PetDetailsFragment"
+            app:destination="@id/PetDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/PetDetailsFragment"
+        android:name="com.example.petfinder.ui.PetDetailsFragment"
+        android:label="{animal_name}"
+        tools:layout="@layout/fragment_pet_details">
+
+        <argument
+            android:name="animal_name"
+            app:argType="string" />
+        <argument
+            android:name="animal"
+            app:argType="com.example.petfinder.models.Animal" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/FilterFragment"
+        android:name="com.example.petfinder.ui.FilterFragment"
+        android:label="@string/action_filter"
+        tools:layout="@layout/fragment_filter"/>
+
+    <action
+        android:id="@+id/action_to_FilterFragment"
+        app:destination="@id/FilterFragment" />
+</navigation>
