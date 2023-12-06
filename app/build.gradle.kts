@@ -66,7 +66,7 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.koin.test.junit4)
     testImplementation(libs.koin.android.test)
-    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.androidx.core.testing)
     androidTestImplementation(libs.androidx.test.ext.junit)

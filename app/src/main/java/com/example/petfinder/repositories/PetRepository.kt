@@ -67,7 +67,7 @@ private fun makeBreeds(input: BreedsResponse?): Breeds = Breeds(
     primary = input?.primary ?: "",
     secondary = input?.secondary ?: "",
     isMixed = input?.mixed ?: input?.secondary.isNullOrBlank(),
-    isUnknown = input?.unknown ?: input?.primary.isNullOrBlank() || input?.secondary.isNullOrBlank()
+    isUnknown = input?.unknown ?: input?.primary.isNullOrBlank() && input?.secondary.isNullOrBlank()
 )
 
 private fun makePhotos(input: List<PhotoResponse>?): List<Photo> = input?.map { makePhoto(it) } ?: emptyList()
