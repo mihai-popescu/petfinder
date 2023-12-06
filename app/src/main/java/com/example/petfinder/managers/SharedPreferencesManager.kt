@@ -27,7 +27,7 @@ class SharedPreferencesManagerImpl(context: Context) : SharedPreferencesManager 
             edit()?.let {
                 it.putString(TOKEN, token)
                 it.putLong(EXPIRATION, expiration)
-            }
+            }?.apply()
         }
     }
 }
