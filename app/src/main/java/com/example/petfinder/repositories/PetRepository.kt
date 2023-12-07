@@ -11,6 +11,7 @@ import com.example.petfinder.models.network.BreedsResponse
 import com.example.petfinder.models.network.PhotoResponse
 import com.example.petfinder.models.network.ResultWrapper
 import com.example.petfinder.models.network.safeApiCall
+import com.example.petfinder.network.AuthorizedTokenProvider
 import com.example.petfinder.network.PetFinderService
 import kotlinx.coroutines.Dispatchers
 import org.koin.core.component.KoinComponent
@@ -18,6 +19,7 @@ import org.koin.core.component.inject
 
 class PetRepository: KoinComponent {
     private val service: PetFinderService by inject()
+    private val tokenProvider: AuthorizedTokenProvider by inject()
     private val searchCriteriaManager: SearchCriteriaManager by inject()
 
     suspend fun search(pageNumber: Int
@@ -34,9 +36,26 @@ class PetRepository: KoinComponent {
                 Result.Success(makeAnimals(response.value))
             }
 
-            is ResultWrapper.AuthorizationNotFoundError -> Result.AuthorizationNotFoundError(
-                response.exception
-            )
+            is ResultWrapper.AuthorizationNotFoundError -> {
+                if (tokenProvider.forceReauthorization()) {
+                    when (val response = safeApiCall(Dispatchers.IO) { service.getAnimals(
+                        size = if (searchCriteria.size.isEmpty()) null else searchCriteria.size.fold("") { acc: String, size: Size ->
+                            "$acc${size.value},"
+                        }.dropLast(1),
+                        location = searchCriteria.location,
+                        pageNumber = pageNumber
+                    ) }) {
+                        is ResultWrapper.Success -> Result.Success(makeAnimals(response.value))
+                        is ResultWrapper.AuthorizationNotFoundError -> Result.AuthorizationNotFoundError(response.exception)
+                        is ResultWrapper.NetworkError -> Result.NetworkError(response.exception)
+                        is ResultWrapper.NoConnectionError -> Result.NoConnectionError(response.exception)
+                        is ResultWrapper.GenericError -> Result.Error(Exception(response.error))
+                    }
+                } else
+                Result.AuthorizationNotFoundError(
+                    response.exception
+                )
+            }
 
             is ResultWrapper.NetworkError -> Result.NetworkError(response.exception)
             is ResultWrapper.NoConnectionError -> Result.NoConnectionError(response.exception)

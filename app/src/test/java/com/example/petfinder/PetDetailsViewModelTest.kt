@@ -1,5 +1,6 @@
 package com.example.petfinder
 
+import com.example.petfinder.exceptions.AuthorizationException
 import com.example.petfinder.models.Animal
 import com.example.petfinder.models.Breeds
 import com.example.petfinder.models.Gender
@@ -11,6 +12,7 @@ import com.example.petfinder.models.network.AnimalResponse
 import com.example.petfinder.models.network.BreedsResponse
 import com.example.petfinder.models.network.ColorsResponse
 import com.example.petfinder.models.network.PhotoResponse
+import com.example.petfinder.network.AuthorizedTokenProvider
 import com.example.petfinder.network.PetFinderService
 import com.example.petfinder.ui.PetDetailsViewModel
 import kotlinx.coroutines.runBlocking
@@ -23,6 +25,8 @@ import org.koin.test.KoinTestRule
 import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
+import org.mockito.kotlin.doAnswer
+import org.mockito.kotlin.stub
 
 class PetDetailsViewModelTest: KoinTest {
     @get:Rule
@@ -108,6 +112,14 @@ class PetDetailsViewModelTest: KoinTest {
             links = null
         )
     )
+
+    val error = """{
+    "type": "https://www.petfinder.com/developers/v2/docs/errors/ERR-00001/",
+    "status": 401,
+    "title": "Invalid Request",
+    "detail": "Access token invalid or expired"
+}
+"""
 
 
     @Test
