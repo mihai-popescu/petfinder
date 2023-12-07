@@ -17,7 +17,7 @@ data class SearchCriteria(
     val houseTrained: Boolean = false,
     val declawed: Boolean = false,
     val specialNeeds: Boolean = false,
-    val location: String? = null,
+    val location: LocationSearch = LocationSearch.None,
     val distance: Int? = null,
     val before: String? = null,
     val after: String? = null,
@@ -65,4 +65,12 @@ enum class Sort( val value: String) {
     Distance("distance"),
     RevDistance("-distance"),
     Random("random")
+}
+
+sealed class LocationSearch(val value: String?) {
+    data object None: LocationSearch(null)
+
+    class SetLocation(value: String): LocationSearch(value)
+
+    class AutoLocation(value: String): LocationSearch(value)
 }

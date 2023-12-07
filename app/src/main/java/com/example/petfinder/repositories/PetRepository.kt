@@ -29,7 +29,7 @@ class PetRepository: KoinComponent {
             size = if (searchCriteria.size.isEmpty()) null else searchCriteria.size.fold("") { acc: String, size: Size ->
                 "$acc${size.value},"
             }.dropLast(1),
-            location = searchCriteria.location,
+            location = searchCriteria.location.value,
             pageNumber = pageNumber
         ) }) {
             is ResultWrapper.Success -> {
@@ -42,7 +42,7 @@ class PetRepository: KoinComponent {
                         size = if (searchCriteria.size.isEmpty()) null else searchCriteria.size.fold("") { acc: String, size: Size ->
                             "$acc${size.value},"
                         }.dropLast(1),
-                        location = searchCriteria.location,
+                        location = searchCriteria.location.value,
                         pageNumber = pageNumber
                     ) }) {
                         is ResultWrapper.Success -> Result.Success(makeAnimals(response.value))
