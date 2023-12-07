@@ -12,10 +12,12 @@ import com.example.petfinder.models.network.AnimalResponse
 import com.example.petfinder.models.network.BreedsResponse
 import com.example.petfinder.models.network.ColorsResponse
 import com.example.petfinder.models.network.PhotoResponse
+import com.example.petfinder.models.network.ResultWrapper
 import com.example.petfinder.network.AuthorizedTokenProvider
 import com.example.petfinder.network.PetFinderService
 import com.example.petfinder.ui.PetDetailsViewModel
 import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Test
 import org.junit.Assert.assertEquals
 import org.junit.Rule
@@ -25,8 +27,8 @@ import org.koin.test.KoinTestRule
 import org.koin.test.mock.MockProviderRule
 import org.koin.test.mock.declareMock
 import org.mockito.Mockito
-import org.mockito.kotlin.doAnswer
-import org.mockito.kotlin.stub
+import retrofit2.HttpException
+import retrofit2.Response
 
 class PetDetailsViewModelTest: KoinTest {
     @get:Rule
@@ -37,6 +39,7 @@ class PetDetailsViewModelTest: KoinTest {
         modules(
             module {
                 single { PetDetailsViewModel(animal) }
+                declareMock<AuthorizedTokenProvider> { AuthorizedTokenProvider() }
             })
     }
 
@@ -154,5 +157,23 @@ class PetDetailsViewModelTest: KoinTest {
         Thread.sleep(200)
         val newValues = viewModel.animal.value
         assertEquals(expectedData, newValues)
+    }
+
+
+
+    @Test
+    fun authorizationError() {
+        val petFinderService = declareMock<PetFinderService>()
+        runBlocking {
+            Mockito.`when`(petFinderService. getAnimal(animal.id.toInt())).thenAnswer {
+                throw HttpException(Response.error<HttpException>(401, error.toResponseBody()))
+            }
+        }
+        val viewModel = PetDetailsViewModel(animal)
+
+        Thread.sleep(200)
+        val newValues = viewModel.animal.value
+        assertEquals(animal, newValues)
+        assertEquals(viewModel.error.value, ResultWrapper.AuthorizationNotFoundError.exception)
     }
 }

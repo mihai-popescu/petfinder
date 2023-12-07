@@ -3,6 +3,7 @@ package com.example.petfinder.ui
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.petfinder.exceptions.NoConnectivityException
 import com.example.petfinder.extensions.ifNotNull
 import com.example.petfinder.models.Animal
 import com.example.petfinder.models.network.ResultWrapper
@@ -28,6 +29,9 @@ class PetDetailsViewModel(private val originalAnimal: Animal) : ViewModel(), Koi
     private val _animal = MutableStateFlow(originalAnimal)
     val animal = _animal.asStateFlow()
 
+    private val _error: MutableStateFlow<Exception?> = MutableStateFlow(null)
+    val error = _error.asStateFlow()
+
     init {
         viewModelScope.launch {
             when (val response = safeApiCall(IO) {
@@ -47,18 +51,33 @@ class PetDetailsViewModel(private val originalAnimal: Animal) : ViewModel(), Koi
                             }
 
                             is ResultWrapper.AuthorizationNotFoundError -> {
+                                _error.value = response.exception
                                 Log.e(TAG, "Authorization not found: ${response.exception}")
                             }
 
-                            is ResultWrapper.NoConnectionError -> Log.e(TAG, "No network access")
-                            else -> Log.e(TAG, "Unknown error")
+                            is ResultWrapper.NoConnectionError -> {
+                                Log.e(TAG, "No network access")
+                                _error.value = NoConnectivityException
+                            }
+                            else -> {
+                                Log.e(TAG, "Unknown error")
+                                _error.value = Exception("Unknown")
+                            }
                         }
-                    } else
+                    } else {
+                        _error.value = response.exception
                         Log.e(TAG, "Authorization not found: ${response.exception}")
+                    }
                 }
 
-                is ResultWrapper.NoConnectionError -> Log.e(TAG, "No network access")
-                else -> Log.e(TAG, "Unknown error")
+                is ResultWrapper.NoConnectionError -> {
+                    Log.e(TAG, "No network access")
+                    _error.value = NoConnectivityException
+                }
+                else -> {
+                    Log.e(TAG, "Unknown error")
+                    _error.value = Exception("Unknown")
+                }
             }
         }
     }
