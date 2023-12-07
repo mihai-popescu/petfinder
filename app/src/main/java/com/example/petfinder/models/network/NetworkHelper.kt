@@ -9,6 +9,8 @@ import retrofit2.HttpException
 import java.io.BufferedReader
 import java.io.IOException
 
+
+
 suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend () -> T): ResultWrapper<T> {
     return withContext(dispatcher) {
         try {
