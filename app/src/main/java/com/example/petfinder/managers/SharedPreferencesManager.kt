@@ -4,7 +4,7 @@ import android.content.Context
 
 interface SharedPreferencesManager {
     fun getToken(): Pair<String?, Long>
-    fun setToken(token: String, expiration: Long)
+    fun setToken(token: String?, expiration: Long?)
 }
 
 class SharedPreferencesManagerImpl(context: Context) : SharedPreferencesManager {
@@ -22,12 +22,13 @@ class SharedPreferencesManagerImpl(context: Context) : SharedPreferencesManager 
         }
     }
 
-    override fun setToken(token: String, expiration: Long) {
+    override fun setToken(token: String?, expiration: Long?) {
         with(sharedPrefs) {
-            edit()?.let {
-                it.putString(TOKEN, token)
-                it.putLong(EXPIRATION, expiration)
-            }
+            edit()?.let { edit ->
+                token?.let { edit.putString(TOKEN, token) } ?: run { edit.remove(TOKEN) }
+                expiration?.let { edit.putLong(EXPIRATION, expiration) } ?: run { edit.remove(
+                    EXPIRATION) }
+            }?.apply()
         }
     }
 }

@@ -25,7 +25,7 @@ suspend fun <T> safeApiCall(dispatcher: CoroutineDispatcher, apiCall: suspend ()
                     val code = throwable.code()
                     val errorResponse = throwable.response()?.errorBody()?.byteStream()?.bufferedReader()?.use(
                         BufferedReader::readText) ?: ""
-                    if (code == 400 && errorResponse == "Invalid API key")
+                    if (code == 401 && errorResponse.contains("Access token invalid or expired"))
                         return@withContext ResultWrapper.AuthorizationNotFoundError
                     ResultWrapper.GenericError(code, errorResponse)
                 }

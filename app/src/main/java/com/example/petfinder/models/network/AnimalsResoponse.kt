@@ -6,6 +6,10 @@ data class AnimalsResponse(
     val animals: List<AnimalResponse>?,
 )
 
+data class AnimalCallResponse(
+    val animal: AnimalResponse?
+)
+
 data class AnimalResponse(
     val id: Long?,
     @SerializedName("organization_id")
@@ -14,7 +18,7 @@ data class AnimalResponse(
     val type: String?,
     val species: String?,
     val breeds: BreedsResponse?,
-    val colors: ColorsResponse,
+    val colors: ColorsResponse?,
     val age: String?,
     val gender: String?,
     val size: String?,
