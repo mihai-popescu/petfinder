@@ -63,4 +63,13 @@ class AuthorizedTokenProvider: KoinComponent {
             token to expiresIn.toInt()
         } ?: throw AuthorizationException
     }
+
+    fun forceReauthorization(): Boolean {
+        return authorizedToken?.let {
+            authorizedToken = null
+            tokenExpirationTime = null
+            sharedPreferencesManager.setToken(null, null)
+            true
+        } ?: false
+    }
 }
