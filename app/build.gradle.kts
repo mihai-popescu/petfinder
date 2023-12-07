@@ -75,4 +75,6 @@ dependencies {
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation(libs.androidx.swiperefreshlayout)
+    implementation(libs.play.services.location)
+
 }

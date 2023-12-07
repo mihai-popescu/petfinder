@@ -3,6 +3,7 @@ package com.example.petfinder.network
 import com.example.petfinder.models.network.AnimalCallResponse
 import com.example.petfinder.models.network.AnimalResponse
 import com.example.petfinder.models.network.AnimalsResponse
+import com.example.petfinder.models.network.TypesCallResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -16,4 +17,7 @@ interface PetFinderService {
 
     @GET("animals/{id}")
     suspend fun getAnimal(@Path("id") animalId: Int): AnimalCallResponse
+
+    @GET("types")
+    suspend fun getTypes(): TypesCallResponse
 }

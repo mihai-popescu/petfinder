@@ -1,5 +1,6 @@
 package com.example.petfinder.ui
 
+import android.location.Location
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.ExperimentalPagingApi
@@ -9,6 +10,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.example.petfinder.managers.SearchCriteriaManager
 import com.example.petfinder.models.Animal
+import com.example.petfinder.models.LocationSearch
 import kotlinx.coroutines.flow.Flow
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
@@ -20,7 +22,7 @@ class PetsListViewModel: ViewModel(), KoinComponent {
 
     init {
         val searchCriteria = searchCriteriaManager.searchCriteria
-        searchCriteriaManager.searchCriteria = searchCriteria.copy(location = "New York")
+//        searchCriteriaManager.searchCriteria = searchCriteria.copy(location = LocationSearch.SetLocation("New York"))
     }
 
     @OptIn(ExperimentalPagingApi::class)
@@ -35,4 +37,11 @@ class PetsListViewModel: ViewModel(), KoinComponent {
             remoteMediator = null,
             pagingSourceFactory = pagingSourceFactory).flow.cachedIn(viewModelScope)
     }
+
+    fun updateLocation(location: Location?) {
+        if (location == null || !isAutoLocation()) return
+        searchCriteriaManager.searchCriteria = searchCriteriaManager.searchCriteria.copy(location = LocationSearch.AutoLocation("${location.latitude}, ${location.longitude}"))
+    }
+
+    fun isAutoLocation() = searchCriteriaManager.searchCriteria.location is LocationSearch.AutoLocation
 }
